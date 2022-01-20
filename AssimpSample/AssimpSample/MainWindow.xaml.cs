@@ -87,14 +87,14 @@ namespace AssimpSample
         {
             switch (e.Key)
             {
-                case Key.F10: this.Close(); break;
-                case Key.W: m_world.RotationX -= 5.0f; break;
-                case Key.S: m_world.RotationX += 5.0f; break;
-                case Key.A: m_world.RotationY -= 5.0f; break;
-                case Key.D: m_world.RotationY += 5.0f; break;
+                case Key.F2: this.Close(); break;
+                case Key.E: RotateE(); break;
+                case Key.D: RotateD(); break;
+                case Key.S: m_world.RotationY -= 5.0f; break;
+                case Key.F: m_world.RotationY += 5.0f; break;
                 case Key.Add: m_world.SceneDistance -= 700.0f; break;
                 case Key.Subtract: m_world.SceneDistance += 700.0f; break;
-                case Key.F2:
+                case Key.F10:
                     OpenFileDialog opfModel = new OpenFileDialog();
                     bool result = (bool) opfModel.ShowDialog();
                     if (result)
@@ -114,6 +114,36 @@ namespace AssimpSample
                     }
                     break;
             }
+
+            
+        }
+
+        private void RotateE() {
+            if (m_world.RotationX == -3*5) return;
+            m_world.RotationX -= 5.0f;
+
+        }
+
+        private void RotateD()
+        {
+            if (m_world.RotationX == 14*5) return;
+            m_world.RotationX += 5.0f;
+
+        }
+
+        private void cb1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            m_world.GoalHeight = cb1.SelectedIndex + 3;
+            openGLControl.Focus();
+        }
+
+        private void cb2_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (cb2.SelectedIndex == 0) m_world.BallScale = 1;
+            if (cb2.SelectedIndex == 1) m_world.BallScale = 2;
+            if (cb2.SelectedIndex == 2) m_world.BallScale = 4;
+            if (cb2.SelectedIndex == 3) m_world.BallScale = 8;
+            openGLControl.Focus();
         }
     }
 }

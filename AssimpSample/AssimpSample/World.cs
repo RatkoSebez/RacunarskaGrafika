@@ -94,6 +94,10 @@ namespace AssimpSample
         /// </summary>
         private OpenGL gl;
 
+        private Double goalHeight;
+
+        private Double ballScale;
+
         #endregion Atributi
 
         #region Properties
@@ -143,6 +147,16 @@ namespace AssimpSample
         {
             get { return m_scene; }
             set { m_scene = value; }
+        }
+
+        public Double GoalHeight {
+            get { return goalHeight; }
+            set { goalHeight = value; }
+        }
+
+        public Double BallScale {
+            get { return ballScale; }
+            set { ballScale = value; }
         }
 
         /// <summary>
@@ -203,6 +217,8 @@ namespace AssimpSample
             this.m_width = width;
             this.m_height = height;
             this.gl = gl;
+            this.goalHeight = 3;
+            this.ballScale = 1;
             textureIDs = new uint[1];
         }
 
@@ -226,6 +242,7 @@ namespace AssimpSample
             gl.Enable(OpenGL.GL_DEPTH_TEST);
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.FrontFace(OpenGL.GL_CCW);
+            SetupLighting(gl);
             gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             gl.Color(1f, 0f, 0f);
             // Model sencenja na flat (konstantno)
@@ -235,7 +252,7 @@ namespace AssimpSample
             cylinder = new Cylinder();
             cylinder.BaseRadius = 0.1;
             cylinder.TopRadius = 0.1;
-            cylinder.Height = 3;
+            cylinder.Height = goalHeight;
             cylinder.Slices = 100;
             cylinder.Stacks = 100;
             cylinder2 = new Cylinder();
@@ -267,9 +284,36 @@ namespace AssimpSample
             gl.LoadIdentity();                // resetuj ModelView Matrix
         }
 
-        public void EnableTexture(String imagePath) {
+        /// <summary>
+        /// Podesavanje osvetljenja
+        /// </summary>
+        private void SetupLighting(OpenGL gl)
+        {
+            float[] global_ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
+            gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
+
+            float[] light0pos = new float[] { 0.0f, 0.0f, -4.0f, 1.0f };
+            float[] light0ambient = new float[] { 0.4f, 0.4f, 0.4f, 1.0f };
+            float[] light0diffuse = new float[] { 0.3f, 0.3f, 0.3f, 1.0f };
+            //float[] light0specular = new float[] { 0.8f, 0.8f, 0.8f, 1.0f };
+
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light0pos);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_AMBIENT, light0ambient);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, light0diffuse);
+            //gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, light0specular);
+            gl.Enable(OpenGL.GL_LIGHTING);
+            gl.Enable(OpenGL.GL_LIGHT0);
+            gl.Enable(OpenGL.GL_NORMALIZE);
+        }
+
+        public void EnableTexture(String imagePath, bool ok) {
             gl.Enable(OpenGL.GL_TEXTURE_2D);
-            gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_ADD);
+            if (ok) {
+                gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_MODULATE);
+            }
+            else{
+                gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_ADD);
+            }
 
             gl.GenTextures(1, textureIDs);
 
@@ -321,7 +365,7 @@ namespace AssimpSample
             gl.Scale(500f, 500f, 500f);
             gl.Color(0.0f, 0.5f, 0.0f);
 
-            EnableTexture("..//..//images//trava.jpg");
+            EnableTexture("..//..//images//trava.jpg", false);
 
             //podloga
             gl.Begin(OpenGL.GL_QUADS);
@@ -331,7 +375,10 @@ namespace AssimpSample
             }
             gl.End();
 
-            EnableTexture("..//..//images//bela-plastika.jpg");
+            EnableTexture("..//..//images//bela-plastika.jpg", true);
+
+            //visina gola po izboru
+            cylinder.Height = goalHeight;
 
             // cilindri
             //gl.FrontFace(OpenGL.GL_CW);
@@ -361,12 +408,15 @@ namespace AssimpSample
             cylinder3.Render(gl, RenderMode.Render);
             gl.Translate(1f, 0f, 0f);
 
-            EnableTexture("..//..//images//ball.jpg");
+            EnableTexture("..//..//images//ball.jpg", false);
 
             //lopta
             gl.Translate(-1f, 2f, 0.14f);
             gl.Scale(0.25, 0.25, 0.25);
+            //skaliranje lopte po zelji korisnika
+            gl.Scale(ballScale, ballScale, ballScale);
             m_scene.Draw();
+            gl.Scale(1/ballScale, 1/ballScale, 1/ballScale);
 
             gl.PopMatrix();
 

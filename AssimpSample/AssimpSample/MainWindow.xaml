@@ -3,13 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SharpGL WPF Application" Height="350" Width="525" 
         xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF" KeyDown="Window_KeyDown">
-    <Grid>
-        
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Label>
+                    Goal height :
+                </Label>
+                <ComboBox Name="cb1" Width="80" SelectionChanged="cb1_SelectionChanged">
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="4"></ComboBoxItem>
+                    <ComboBoxItem Content="5"></ComboBoxItem>
+                    <ComboBoxItem Content="6"></ComboBoxItem>
+                </ComboBox>
+                <Label>
+                    Ball scale :
+                </Label>
+                <ComboBox Name="cb2" Width="80" SelectionChanged="cb2_SelectionChanged">
+                    <ComboBoxItem Content="1"></ComboBoxItem>
+                    <ComboBoxItem Content="2"></ComboBoxItem>
+                    <ComboBoxItem Content="4"></ComboBoxItem>
+                    <ComboBoxItem Content="8"></ComboBoxItem>
+                </ComboBox>
+            </ToolBar>
+        </ToolBarTray>
+
         <!-- The OpenGL control provides a OpenGL drawing surface. -->
         <sharpGL:OpenGLControl 
             Name="openGLControl" OpenGLDraw="openGLControl_OpenGLDraw" 
             OpenGLInitialized="openGLControl_OpenGLInitialized" Resized="openGLControl_Resized"
             DrawFPS="True" RenderContextType="FBO" FrameRate="60"/>
         
-    </Grid>
+    </DockPanel>
 </Window>
