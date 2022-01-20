@@ -15,6 +15,8 @@ using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneGraph.Core;
 using SharpGL;
 using SharpGL.Enumerations;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace AssimpSample
 {
@@ -25,7 +27,27 @@ namespace AssimpSample
     /// </summary>
     public class World : IDisposable
     {
+        /// <summary>
+        ///  Nabrojani tip OpenGL rezima filtriranja tekstura
+        /// </summary>
+        public enum TextureGenMode
+        {
+            ObjectLinear,
+            EyeLinear,
+            SphereMap
+        };
+
         #region Atributi
+
+        /// <summary>
+        ///  Identifikator teksture
+        /// </summary>
+        uint[] textureIDs;
+
+        /// <summary>
+        ///  Izabrana OpenGL mehanizam za iscrtavanje.
+        /// </summary>
+        private TextureGenMode m_selectedMode = TextureGenMode.SphereMap;
 
         /// <summary>
         ///	 Scena koja se prikazuje.
@@ -67,9 +89,52 @@ namespace AssimpSample
 
         private Cylinder cylinder, cylinder2, cylinder3;
 
+        /// <summary>
+        ///	 Referenca na OpenGL instancu unutar aplikacije
+        /// </summary>
+        private OpenGL gl;
+
         #endregion Atributi
 
         #region Properties
+
+        public TextureGenMode SelectedMode
+        {
+            get { return m_selectedMode; }
+            set
+            {
+                m_selectedMode = value;
+
+                // Projekciona ravan
+                float[] zPlane = { 0.0f, 0.0f, 1.0f, 1.0f };
+
+                switch (m_selectedMode)
+                {
+                    case TextureGenMode.ObjectLinear:
+                        // Object Linear
+                        gl.TexGen(OpenGL.GL_S, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_OBJECT_LINEAR);
+                        gl.TexGen(OpenGL.GL_T, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_OBJECT_LINEAR);
+                        gl.TexGen(OpenGL.GL_S, OpenGL.GL_OBJECT_PLANE, zPlane);
+                        gl.TexGen(OpenGL.GL_T, OpenGL.GL_OBJECT_PLANE, zPlane);
+                        break;
+
+                    case TextureGenMode.EyeLinear:
+                        // Eye Linear
+                        gl.TexGen(OpenGL.GL_S, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_EYE_LINEAR);
+                        gl.TexGen(OpenGL.GL_T, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_EYE_LINEAR);
+                        gl.TexGen(OpenGL.GL_S, OpenGL.GL_EYE_PLANE, zPlane);
+                        gl.TexGen(OpenGL.GL_T, OpenGL.GL_EYE_PLANE, zPlane);
+                        break;
+
+                    case TextureGenMode.SphereMap:
+                        // Sphere Map
+                        gl.TexGen(OpenGL.GL_S, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_SPHERE_MAP);
+                        gl.TexGen(OpenGL.GL_T, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_SPHERE_MAP);
+                        break;
+                }
+            }
+        }
+
 
         /// <summary>
         ///	 Scena koja se prikazuje.
@@ -137,6 +202,8 @@ namespace AssimpSample
             this.m_scene = new AssimpScene(scenePath, sceneFileName, gl);
             this.m_width = width;
             this.m_height = height;
+            this.gl = gl;
+            textureIDs = new uint[1];
         }
 
         /// <summary>
@@ -200,6 +267,38 @@ namespace AssimpSample
             gl.LoadIdentity();                // resetuj ModelView Matrix
         }
 
+        public void EnableTexture(String imagePath) {
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_DECAL);
+
+            gl.GenTextures(1, textureIDs);
+
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, textureIDs[0]);
+            // Ucitaj sliku i podesi parametre teksture
+            Bitmap image = new Bitmap(imagePath);
+            image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+            BitmapData imageData = image.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            gl.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, (int)OpenGL.GL_RGBA8, image.Width, image.Height, 0, OpenGL.GL_BGRA, OpenGL.GL_UNSIGNED_BYTE, imageData.Scan0);
+
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, OpenGL.GL_LINEAR);
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, OpenGL.GL_LINEAR);
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_S, OpenGL.GL_REPEAT);
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_T, OpenGL.GL_REPEAT);
+
+            image.UnlockBits(imageData);
+            image.Dispose();
+
+            // Ukljuci generisanje koord. teksture
+            gl.Enable(OpenGL.GL_TEXTURE_GEN_S);
+            gl.Enable(OpenGL.GL_TEXTURE_GEN_T);
+
+            // sferno podrazumevani nacin generisanja koord. teksture
+            // gl.TexGen(OpenGL.GL_S, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_SPHERE_MAP);
+            // gl.TexGen(OpenGL.GL_T, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_SPHERE_MAP);
+        }
+
         /// <summary>
         ///  Iscrtavanje OpenGL kontrole.
         /// </summary>
@@ -222,6 +321,8 @@ namespace AssimpSample
             gl.Scale(500f, 500f, 500f);
             gl.Color(0.0f, 0.5f, 0.0f);
 
+            EnableTexture("..//..//images//trava.jpg");
+
             //podloga
             gl.Begin(OpenGL.GL_QUADS);
             for (int i = 0; i < pointLinePolygonVertices.Length; i = i + 3)
@@ -229,6 +330,8 @@ namespace AssimpSample
                 gl.Vertex(pointLinePolygonVertices[i], pointLinePolygonVertices[i + 1], pointLinePolygonVertices[i + 2]);
             }
             gl.End();
+
+            EnableTexture("..//..//images//bela-plastika.jpg");
 
             // cilindri
             //gl.FrontFace(OpenGL.GL_CW);
@@ -258,14 +361,16 @@ namespace AssimpSample
             cylinder3.Render(gl, RenderMode.Render);
             gl.Translate(1f, 0f, 0f);
 
+            EnableTexture("..//..//images//ball.jpg");
 
-
+            //lopta
             gl.Translate(-1f, 2f, 0.14f);
             gl.Scale(0.25, 0.25, 0.25);
             m_scene.Draw();
 
             gl.PopMatrix();
 
+            //tekst u gornjem desnom uglu
             gl.PushMatrix();
             //gl.Disable(OpenGL.GL_DEPTH_TEST);
             //gl.Viewport(2*m_width / 3, 2*m_height / 3, 2 * m_width / 3, 2 * m_height / 3);
@@ -288,6 +393,13 @@ namespace AssimpSample
             gl.Flush();
         }
 
+        /// <summary>
+        /// Menja trenutno aktivni mod za filtering.
+        /// </summary>
+        public void ChangeTextureGenMode()
+        {
+            SelectedMode = (TextureGenMode)(((int)m_selectedMode + 1) % Enum.GetNames(typeof(TextureGenMode)).Length);
+        }
 
         /// <summary>
         ///  Implementacija IDisposable interfejsa.

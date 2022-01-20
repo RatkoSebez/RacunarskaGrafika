@@ -16,7 +16,6 @@ using SharpGL.SceneGraph;
 using SharpGL;
 using Microsoft.Win32;
 
-
 namespace AssimpSample
 {
     /// <summary>
@@ -84,7 +83,7 @@ namespace AssimpSample
             m_world.Resize(args.OpenGL, (int)openGLControl.ActualWidth, (int)openGLControl.ActualHeight);
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             switch (e.Key)
             {
