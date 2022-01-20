@@ -1,0 +1,36 @@
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpLib\Assimp32.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpLib\Assimp64.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpLib\AssimpNet.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\duck.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\RubgyBall\ball.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\RubgyBall\ball2.3ds
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Touareg\Touareg.3DS
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpSample.exe.config
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpSample.exe
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpSample.pdb
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\AssimpNet.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\SharpGL.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\SharpGL.SceneGraph.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\SharpGL.WPF.dll
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\MainWindow.baml
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\MainWindow.g.cs
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\App.g.cs
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample_Content.g.cs
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample_MarkupCompile.cache
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.g.resources
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.Properties.Resources.resources
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.GenerateResource.cache
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.CoreCompileInputs.cache
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.CopyComplete
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.exe
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.pdb
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\RubgyBall\model.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\RubgyBall\duck.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\model.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\ball.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\ball2.3ds
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\dragon.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\ball.mtl
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\untitled.dae
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csprojAssemblyReference.cache
+C:\Users\orz\Desktop\sve\online predavanja\racunarska grafika\materijali\vezbe\vezba4\Vezbe4\AssimpSample\AssimpSample\bin\Debug\3D Models\Duck\ovoKoristim.dae
