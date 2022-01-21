@@ -17,6 +17,7 @@ using SharpGL;
 using SharpGL.Enumerations;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Threading;
 
 namespace AssimpSample
 {
@@ -97,6 +98,26 @@ namespace AssimpSample
         private Double goalHeight;
 
         private Double ballScale;
+
+        private Boolean ballGoingUp;
+
+        private Double ballHeight;
+
+        private Double ballX;
+
+        private Double ballY;
+
+        private Double ballRotation;
+
+        private Double ballRotationSpeed;
+
+        private Boolean startAnimation1;
+
+        private Boolean startAnimation2;
+
+        private Boolean ballHitsGoal;
+
+        private MainWindow window;
 
         #endregion Atributi
 
@@ -204,6 +225,28 @@ namespace AssimpSample
             set { m_height = value; }
         }
 
+        public Double BallHeight
+        {
+            get { return ballHeight; }
+            set { ballHeight = value; }
+        }
+
+        public Double BallRotationSpeed {
+            get { return ballRotationSpeed; }
+            set { ballRotationSpeed = value; }
+        }
+
+        public Boolean StartAnimation1 {
+            get { return startAnimation1; }
+            set { startAnimation1 = value; }
+        }
+
+        public Boolean StartAnimation2
+        {
+            get { return startAnimation2; }
+            set { startAnimation2 = value; }
+        }
+
         #endregion Properties
 
         #region Konstruktori
@@ -220,6 +263,15 @@ namespace AssimpSample
             this.goalHeight = 3;
             this.ballScale = 1;
             textureIDs = new uint[1];
+            this.ballHeight = 0;
+            this.ballGoingUp = true;
+            this.ballRotation = 0;
+            this.ballRotationSpeed = 5;
+            this.startAnimation1 = false;
+            this.startAnimation2 = false;
+            this.ballX = 0;
+            this.ballY = 0;
+            this.ballHitsGoal = false;
         }
 
         /// <summary>
@@ -311,7 +363,7 @@ namespace AssimpSample
             if (ok) {
                 gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_MODULATE);
             }
-            else{
+            else {
                 gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_ADD);
             }
 
@@ -415,8 +467,11 @@ namespace AssimpSample
             gl.Scale(0.25, 0.25, 0.25);
             //skaliranje lopte po zelji korisnika
             gl.Scale(ballScale, ballScale, ballScale);
+            //animacija odskakanja lopte
+            if (startAnimation1) AnimateBallJump();
+            if (startAnimation2) AnimateBallScore();
             m_scene.Draw();
-            gl.Scale(1/ballScale, 1/ballScale, 1/ballScale);
+            gl.Scale(1 / ballScale, 1 / ballScale, 1 / ballScale);
 
             gl.PopMatrix();
 
@@ -441,6 +496,53 @@ namespace AssimpSample
 
             // Oznaci kraj iscrtavanja
             gl.Flush();
+        }
+
+        public void AnimateBallJump() {
+            if (ballGoingUp)
+            {
+                ballHeight += 0.2;
+                if (ballHeight > 3.0) ballGoingUp = false;
+            }
+            else
+            {
+                ballHeight -= 0.2;
+                if (ballHeight < 0.1) ballGoingUp = true;
+            }
+            gl.Translate(0f, 0f, ballHeight);
+            ballRotation += ballRotationSpeed;
+            gl.Rotate(ballRotation, 1.0f, 0.0f, 0.0f);
+        }
+
+        public void AnimateBallScore()
+        {
+            window.IsEnabled = false;
+            if (ballHitsGoal == false)
+            {
+                ballHeight += 0.2;
+                ballX += 0.090;
+                ballY -= 0.2;
+                if (ballHeight > 6.7) ballHitsGoal = true;
+            }
+            else {
+                ballHeight += 0.2;
+                //ballX = -ballX;
+                ballX -= 0.090;
+                ballY -= 0.2;
+                if (ballHeight > 10) {
+                    ballHeight = 0;
+                    ballX = 0;
+                    ballY = 0;
+                    ballHitsGoal = false;
+                    startAnimation2 = false;
+                    window.IsEnabled = true;
+                }
+            }
+            gl.Translate(ballX, ballY, ballHeight);
+        }
+
+        public void Window(MainWindow window){
+            this.window = window;
         }
 
         /// <summary>

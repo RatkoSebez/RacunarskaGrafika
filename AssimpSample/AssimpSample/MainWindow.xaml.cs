@@ -92,6 +92,8 @@ namespace AssimpSample
                 case Key.D: RotateD(); break;
                 case Key.S: m_world.RotationY -= 5.0f; break;
                 case Key.F: m_world.RotationY += 5.0f; break;
+                case Key.C: m_world.StartAnimation1 = !m_world.StartAnimation1; m_world.BallHeight = 0; break;
+                case Key.V: m_world.StartAnimation2 = true; m_world.Window(this); break;
                 case Key.Add: m_world.SceneDistance -= 700.0f; break;
                 case Key.Subtract: m_world.SceneDistance += 700.0f; break;
                 case Key.F10:
@@ -114,8 +116,6 @@ namespace AssimpSample
                     }
                     break;
             }
-
-            
         }
 
         private void RotateE() {
@@ -143,6 +143,15 @@ namespace AssimpSample
             if (cb2.SelectedIndex == 1) m_world.BallScale = 2;
             if (cb2.SelectedIndex == 2) m_world.BallScale = 4;
             if (cb2.SelectedIndex == 3) m_world.BallScale = 8;
+            openGLControl.Focus();
+        }
+
+        private void cb3_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (cb3.SelectedIndex == 0) m_world.BallRotationSpeed = 1;
+            if (cb3.SelectedIndex == 1) m_world.BallRotationSpeed = 3;
+            if (cb3.SelectedIndex == 2) m_world.BallRotationSpeed = 5;
+            if (cb3.SelectedIndex == 3) m_world.BallRotationSpeed = 10;
             openGLControl.Focus();
         }
     }

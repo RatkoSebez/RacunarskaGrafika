@@ -24,6 +24,15 @@
                     <ComboBoxItem Content="4"></ComboBoxItem>
                     <ComboBoxItem Content="8"></ComboBoxItem>
                 </ComboBox>
+                <Label>
+                    Ball rotation speed :
+                </Label>
+                <ComboBox Name="cb3" Width="80" SelectionChanged="cb3_SelectionChanged">
+                    <ComboBoxItem Content="1"></ComboBoxItem>
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="5"></ComboBoxItem>
+                    <ComboBoxItem Content="10"></ComboBoxItem>
+                </ComboBox>
             </ToolBar>
         </ToolBarTray>
 
