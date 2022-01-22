@@ -294,6 +294,8 @@ namespace AssimpSample
             gl.Enable(OpenGL.GL_DEPTH_TEST);
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.FrontFace(OpenGL.GL_CCW);
+            gl.ColorMaterial(OpenGL.GL_FRONT, OpenGL.GL_AMBIENT_AND_DIFFUSE);
+            gl.Enable(OpenGL.GL_COLOR_MATERIAL);
             SetupLighting(gl);
             gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             gl.Color(1f, 0f, 0f);
@@ -344,21 +346,41 @@ namespace AssimpSample
             float[] global_ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
             gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
-            float[] light0pos = new float[] { 0.0f, 0.0f, -4.0f, 1.0f };
-            float[] light0ambient = new float[] { 0.4f, 0.4f, 0.4f, 1.0f };
-            float[] light0diffuse = new float[] { 0.3f, 0.3f, 0.3f, 1.0f };
+            //tackasto svetlo
+            float[] light0pos = new float[] { 0.0f, 3.0f, -10.0f, 1.0f };
+            float[] light0ambient = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
+            float[] light0diffuse = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
             //float[] light0specular = new float[] { 0.8f, 0.8f, 0.8f, 1.0f };
 
             gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light0pos);
             gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_AMBIENT, light0ambient);
             gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, light0diffuse);
             //gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, light0specular);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPOT_CUTOFF, 180.0f);
+
+            //reflektorsko svetlo
+            float[] light1pos = new float[] { 0.0f, 2.0f, 0.0f, 1.0f };
+            float[] light1ambient = new float[] { 1.0f, 0.0f, 0.6f, 1.0f };
+            float[] light1diffuse = new float[] { 1.0f, 0.0f, 0.6f, 1.0f };
+            float[] smer = new float[] { 0.0f, 0.0f, -1.0f };
+
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_POSITION, light1pos);
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_AMBIENT, light1ambient);
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_DIFFUSE, light1diffuse);
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_SPOT_DIRECTION, smer);
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_SPOT_CUTOFF, 30.0f);
+
             gl.Enable(OpenGL.GL_LIGHTING);
             gl.Enable(OpenGL.GL_LIGHT0);
+            gl.Enable(OpenGL.GL_LIGHT1);
             gl.Enable(OpenGL.GL_NORMALIZE);
         }
 
-        public void EnableTexture(String imagePath, bool ok) {
+        public void EnableTexture(String imagePath, bool ok, bool ok2) {
+            //gl.MatrixMode(OpenGL.GL_TEXTURE);
+            //gl.LoadIdentity();
+            //gl.Scale(500, 500, 500);
+            //gl.MatrixMode(OpenGL.GL_MODELVIEW);
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             if (ok) {
                 gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_MODULATE);
@@ -386,9 +408,16 @@ namespace AssimpSample
             image.UnlockBits(imageData);
             image.Dispose();
 
-            // Ukljuci generisanje koord. teksture
-            gl.Enable(OpenGL.GL_TEXTURE_GEN_S);
-            gl.Enable(OpenGL.GL_TEXTURE_GEN_T);
+            if (ok2)
+            {
+                // Ukljuci generisanje koord. teksture
+                gl.Enable(OpenGL.GL_TEXTURE_GEN_S);
+                gl.Enable(OpenGL.GL_TEXTURE_GEN_T);
+            }
+            else {
+                gl.Disable(OpenGL.GL_TEXTURE_GEN_S);
+                gl.Disable(OpenGL.GL_TEXTURE_GEN_T);
+            }
 
             // sferno podrazumevani nacin generisanja koord. teksture
             // gl.TexGen(OpenGL.GL_S, OpenGL.GL_TEXTURE_GEN_MODE, OpenGL.GL_SPHERE_MAP);
@@ -417,17 +446,21 @@ namespace AssimpSample
             gl.Scale(500f, 500f, 500f);
             gl.Color(0.0f, 0.5f, 0.0f);
 
-            EnableTexture("..//..//images//trava.jpg", false);
+            EnableTexture("..//..//images//trava.jpg", false, false);
 
             //podloga
             gl.Begin(OpenGL.GL_QUADS);
             for (int i = 0; i < pointLinePolygonVertices.Length; i = i + 3)
             {
+                if(i == 0) gl.TexCoord(0.0f, 0.0f);
+                if (i == 3) gl.TexCoord(0.0f, 1.5f);
+                if (i == 6) gl.TexCoord(1.0f, 1.5f);
+                if (i == 9) gl.TexCoord(1.0f, 0.0f);
                 gl.Vertex(pointLinePolygonVertices[i], pointLinePolygonVertices[i + 1], pointLinePolygonVertices[i + 2]);
             }
             gl.End();
 
-            EnableTexture("..//..//images//bela-plastika.jpg", true);
+            EnableTexture("..//..//images//bela-plastika.jpg", true, true);
 
             //visina gola po izboru
             cylinder.Height = goalHeight;
@@ -460,7 +493,7 @@ namespace AssimpSample
             cylinder3.Render(gl, RenderMode.Render);
             gl.Translate(1f, 0f, 0f);
 
-            EnableTexture("..//..//images//ball.jpg", false);
+            EnableTexture("..//..//images//ball.jpg", false, true);
 
             //lopta
             gl.Translate(-1f, 2f, 0.14f);
