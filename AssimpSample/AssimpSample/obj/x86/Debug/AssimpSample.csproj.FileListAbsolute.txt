@@ -69,4 +69,5 @@ C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Deb
 C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.CopyComplete
 C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.exe
 C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.pdb
-C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csprojAssemblyReference.cache
+C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.AssemblyReference.cache
+C:\Users\orz\Desktop\rgProjekat\RgProject2\AssimpSample\AssimpSample\obj\x86\Debug\AssimpSample.csproj.SuggestedBindingRedirects.cache
