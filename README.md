@@ -1,2 +1,2 @@
-# Projekat iz racunarske grafike na 4. godini ftna (2022).
+# Projekat iz racunarske grafike na 4. godini ftna (2021/2022).
 
